@@ -1,4 +1,4 @@
-package com.sp00f.signer;
+package com.angeltoms.signer;
 
 import java.lang.reflect.Array;
 
