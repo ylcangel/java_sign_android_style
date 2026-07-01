@@ -4,7 +4,7 @@
  * @Author: AngelToms
  */
 
-package brut.androlib.repacker;
+package com.angeltoms.signer;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -387,6 +387,7 @@ public class SignatureUtils {
                 || name.endsWith(".EC");
     }
 
+    // ==================== V1 签名解析核心逻辑 ====================
     /**
      * 新添加从apk中解析签名 返回的数据： - derBytes → 等价 new Signature(byte[]) - hexString →
      * 等价 new Signature(String)
@@ -642,6 +643,7 @@ public class SignatureUtils {
         return signaturesUtils;
     }
 
+    // 引入您提到的 ZIP64 检测函数
     private static boolean isZip64EndOfCentralDirectoryLocatorPresent(
             RandomAccessFile zip, long zipEndOfCentralDirectoryPosition) throws IOException {
         long locatorPosition = zipEndOfCentralDirectoryPosition - ZIP64_EOCD_LOCATOR_SIZE;
@@ -677,7 +679,7 @@ public class SignatureUtils {
 
         System.out.println("-------------------------------------------------------------");
 
-        url = SignatureUtils.class.getResource("/app_test.apk");
+        url = SignatureUtils.class.getResource("/app-test.apk");
         if (url == null) {
             throw new RuntimeException("app_test.apk not found in classpath");
         }
@@ -695,8 +697,8 @@ public class SignatureUtils {
             System.out.println("subject:" + cert.getSubjectDN());
             System.out.println(cert.getPublicKey());
         }
-		
-		System.out.println("-------------------------------------------------------------");
+
+        System.out.println("-------------------------------------------------------------");
         List<SignatureUtils> signv2s = null;
         try {
             signv2s = parseV2Signatures(path);
